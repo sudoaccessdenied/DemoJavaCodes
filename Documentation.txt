@@ -1,0 +1,151 @@
+int i = Integer.parseInt(myText.getText());// for 
+
+reading int
+1.sql Date type date;
+2.date format for sql is 2016-01-13(yyyy-mm-dd);
+3.Getting Date from JDateChooser user below 
+
+code;
+(JTextField)txt_dob.getDateEditor
+
+().getUiComponent().getText();
+
+
+
+
+//For Reading Date
+SimpleDateFormat dateFormat = new 
+
+SimpleDateFormat("yyyy-MM-dd");
+String theDate = dateFormat.format
+
+(jDateChooser1.getDate());
+
+
+
+
+//for table setting
+Adding row
+DefaultTableModel model = 
+
+(DefaultTableModel)jTable1.getModel();
+model.addRow(new Object[](theDate));
+
+
+
+//Getting Data from selected row and coloum
+
+try{
+DefaultTableModel model = 
+
+(DefaultTableModel)jTable1.getModel();
+int selectedRow = jTable1.getSelectedRow();
+
+int selectedColumn = 
+
+jTable1.getSelectedColumn();
+
+Date date = new SimpleDateFormat("yyyy-MM-
+
+dd").parse((String))model.getValueAt
+
+(selectedRow,selectedColumn);
+jDateChooser1.setDate(date);
+}catch (ParseException ex){
+
+}
+// edit value in table column
+try{
+DefaultTableModel model = 
+
+(DefaultTableModel)jTable1.getModel();
+int selectedRow = jTable1.getSelectedRow();
+
+int selectedColumn = 
+
+jTable1.getSelectedColumn();
+
+SimpleDateFormat dateFormat = new 
+
+SimpleDateFormat("yyyy-MM-dd");
+String theDate =dateFormat.format
+
+(jDateChooser1.getDate());
+}catch (ParseException ex){
+
+}
+
+//Removing Selected Row 
+
+DefaultTableModel model = 
+
+(DefaultTableModel)jTable1.getModel();
+
+int SelectedRow = jTable.getSelectedRow();
+model.removeRow()
+
+//wrting a notepad from dynamic table
+
+String filePath="C:\\Users\\omar\\Desktop\
+
+\myfolder\\textfile.txt";
+
+File file = new File(filePath);
+
+try{
+FileWriter fw = new FileWriter(file);
+BufferedWriter bw = new BufferedWriter(fw);
+
+for(int i = 0;i<jTableExport.getRowCount();i++){
+	for(int j = 
+
+0;j<jTableExport.getColumnCount();j++){
+
+bw.write(jTableExport.getValueAt(i,j).toString+" 
+
+");
+}
+bw.newLine();
+}
+bw.close();
+fw.close();
+}catch(IOException ex ){
+/*catch input output exception here
+*/}
+
+
+//DefaultTableModel dm = (DefaultTableModel) 
+
+getModel();
+int rowCount = dm.getRowCount();
+//Remove rows one by one from the end of the 
+
+table
+for (int i = rowCount - 1; i >= 0; i--) {
+    dm.removeRow(i);
+}
+
+
+//disable container
+
+
+public static void setEnabledAll(Container 
+
+container, boolean enabled) {
+   Component[] components = 
+
+container.getComponents();
+   if (components.length > 0) {
+      for (Component component : components) {
+         component.setEnabled(enabled);
+         if (component instanceof Container) { // has 
+
+to be a container to contain components
+            setEnabledAll((Container)component, 
+
+enabled); // the recursive call
+         }
+      }
+   }
+}
+
