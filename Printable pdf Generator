@@ -1,0 +1,179 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication1;
+import com.itextpdf.text.Chunk;
+import java.io.FileOutputStream;
+import java.io.IOException;
+ 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import static com.itextpdf.text.Element.CHUNK;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
+
+/**
+ *
+ * @author mathg_000
+ */
+public class Invoice {
+    
+    
+    //use same margin on next page Example
+
+
+ 
+/**
+ * Examples with mirrored margins.
+ */
+
+ 
+    /** Path to the resulting PDF file. */
+    public static final String RESULT
+        = "e:/hello_mirrored_margins.pdf";
+ 
+    /**
+     * Creates a PDF file: hello_mirrored_margins
+     * @param    args    no arguments needed
+     * @throws com.itextpdf.text.DocumentException
+     * @throws java.io.IOException
+     */
+    public static void main(String[] args) throws DocumentException, IOException {
+        
+    Font firstHeading = new Font(Font.FontFamily.COURIER, 20, Font.ITALIC);
+
+
+
+
+
+
+
+
+// step 1
+        Document document = new Document();
+        // step 2
+        PdfWriter.getInstance(document, new FileOutputStream(RESULT));
+        document.setPageSize(PageSize.A4);
+        document.setMargins(20, 20, 20, 20);
+        document.setMarginMirroring(true);
+        // step 3
+        document.open();
+        // write your document here
+        
+        
+        
+        
+        
+        
+        Phrase phrase = new Phrase();
+        Paragraph paragraph = new Paragraph();
+        Chunk title = new Chunk("LIQUID BAR & RESTAURANT",firstHeading);
+        phrase.add(title);
+        phrase.add(Chunk.NEWLINE);
+        phrase.add(Chunk.NEWLINE);
+        
+       
+        
+        phrase.add(new Chunk("HOTEL PUNNU INTERNATIONAL",new Font(Font.FontFamily.HELVETICA,18,Font.BOLD)));
+        phrase.add(Chunk.NEWLINE);
+        
+      
+        
+        phrase.add(new Chunk("7-Court Road,Amritsar",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
+        phrase.add(Chunk.NEWLINE);
+        
+        
+        phrase.add(new Chunk("Ph:0183-2223115",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
+        phrase.add(Chunk.NEWLINE);
+        
+        
+        phrase.add(new Chunk("Sale Invoice",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
+        phrase.add(Chunk.NEWLINE);
+        
+        phrase.add(new Chunk("------------------------------------------------------------------------------------------------------------------------------------------",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
+        phrase.add(Chunk.NEWLINE);
+
+        
+        phrase.add(new Chunk("Invoice No.:addNoHere",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
+        phrase.add(Chunk.NEWLINE);
+        
+        
+        
+        phrase.add(new Chunk("------------------------------------------------------------------------------------------------------------------------------------------",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
+        phrase.add(Chunk.NEWLINE);
+        
+        
+        
+        
+        
+        
+        
+       
+        
+        
+        
+        
+        
+        
+        
+        paragraph.add(phrase);
+        paragraph.setAlignment(Element.ALIGN_CENTER);   
+        document.add(paragraph);
+        
+        
+        
+        
+        
+        
+        
+        document.close();
+    }
+    
+    
+    
+    
+    
+    
+     private static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
