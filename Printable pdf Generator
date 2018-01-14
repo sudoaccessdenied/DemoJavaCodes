@@ -55,6 +55,51 @@ public class Invoice {
 
 
 
+ 
+    /** Path to the resulting PDF file. */
+    public static final String RESULT
+        = "e:/hello_mirrored_margins.pdf";
+ 
+    /**
+     * Creates a PDF file: hello_mirrored_margins
+     * @param    args    no arguments needed
+     * @throws com.itextpdf.text.DocumentException
+     * @throws java.io.IOException
+     */
+    
+    public static PdfPCell getCell(String str,int alignment){
+        
+        Font catFont = new Font(Font.FontFamily.COURIER, 12,Font.BOLD, BaseColor.BLACK);
+        Phrase phrase = new Phrase(new Chunk(str,catFont));
+        phrase.setFont(catFont);
+        
+    PdfPCell cell = new PdfPCell(phrase);
+    cell.setPadding(0);
+    cell.setHorizontalAlignment(alignment);
+    cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+    cell.setBorder(PdfPCell.NO_BORDER);
+    cell.setBorderWidthTop(1);
+    cell.setBorderWidthBottom(1);
+    cell.setPaddingTop(5);
+    cell.setPaddingBottom(10);
+    return cell;
+    }
+    
+    
+    
+    
+    
+    public static void main(String[] args) throws DocumentException, IOException {
+        
+    Font firstHeading = new Font(Font.FontFamily.COURIER, 20, Font.ITALIC);
+
+
+
+
+
+
+
+
 // step 1
         Document document = new Document();
         // step 2
@@ -71,60 +116,51 @@ public class Invoice {
         
         
         
-        Phrase phrase = new Phrase();
-        Paragraph paragraph = new Paragraph();
+        Phrase[] phrase =  {new Phrase(),new Phrase()};
+        Paragraph[] paragraph = {new Paragraph(),new Paragraph()};
         Chunk title = new Chunk("LIQUID BAR & RESTAURANT",firstHeading);
-        phrase.add(title);
-        phrase.add(Chunk.NEWLINE);
-        phrase.add(Chunk.NEWLINE);
+        phrase[0].add(title);
+        phrase[0].add(Chunk.NEWLINE);
+        phrase[0].add(Chunk.NEWLINE);
         
        
         
-        phrase.add(new Chunk("HOTEL PUNNU INTERNATIONAL",new Font(Font.FontFamily.HELVETICA,18,Font.BOLD)));
-        phrase.add(Chunk.NEWLINE);
+        phrase[0].add(new Chunk("HOTEL PUNNU INTERNATIONAL",new Font(Font.FontFamily.HELVETICA,18,Font.BOLD)));
+        phrase[0].add(Chunk.NEWLINE);
         
       
         
-        phrase.add(new Chunk("7-Court Road,Amritsar",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
-        phrase.add(Chunk.NEWLINE);
+        phrase[0].add(new Chunk("7-Court Road,Amritsar",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
+        phrase[0].add(Chunk.NEWLINE);
         
         
-        phrase.add(new Chunk("Ph:0183-2223115",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
-        phrase.add(Chunk.NEWLINE);
+        phrase[0].add(new Chunk("Ph:0183-2223115",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
+        phrase[0].add(Chunk.NEWLINE);
         
         
-        phrase.add(new Chunk("Sale Invoice",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
-        phrase.add(Chunk.NEWLINE);
-        
-        phrase.add(new Chunk("------------------------------------------------------------------------------------------------------------------------------------------",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
-        phrase.add(Chunk.NEWLINE);
-
-        
-        phrase.add(new Chunk("Invoice No.:addNoHere",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
-        phrase.add(Chunk.NEWLINE);
+        phrase[0].add(new Chunk("Sale Invoice",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
+        phrase[0].add(Chunk.NEWLINE);
+        phrase[0].add(Chunk.NEWLINE);
+        paragraph[0].add(phrase[0]);
+        paragraph[0].setAlignment(Element.ALIGN_CENTER);   
+        document.add(paragraph[0]);
+      
         
         
-        
-        phrase.add(new Chunk("------------------------------------------------------------------------------------------------------------------------------------------",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
-        phrase.add(Chunk.NEWLINE);
-        
-        
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        //Add Invoice No. Here 
         
         
+        table.addCell(getCell("Invoice No.:addNoHere",PdfPCell.ALIGN_LEFT));//Add invoice no. here;
+        table.addCell(getCell("Date:1/14/2018",PdfPCell.ALIGN_RIGHT));//Add System current date here;
+        document.add(table);
         
+        
+      //If User slected Restauran/Bar CheckBox Use Below Format
         
         
        
-        
-        
-        
-        
-        
-        
-        
-        paragraph.add(phrase);
-        paragraph.setAlignment(Element.ALIGN_CENTER);   
-        document.add(paragraph);
         
         
         
