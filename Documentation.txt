@@ -1,3 +1,15 @@
+
+//Printing tutorial
+https://support.idrsolutions.com/hc/en-us/articles/115001924571-Print-a-PDF-file-with-Java-and-JPedal-Quick-Start-Tutorial
+
+
+
+
+
+
+
+
+
 int i = Integer.parseInt(myText.getText());// for 
 
 reading int
