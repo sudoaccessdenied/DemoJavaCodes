@@ -11,7 +11,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import com.hotelPunnu.MyFooter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextField;
 /**
  *
  * @author Intel
@@ -25,12 +46,13 @@ public class RestaurentHotel extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
          this.intItems();
+         resetButton.setText(CashierName);//Just for Test
      
        
        
     }
     
-    private int getSubtotal(int numberOfNight,int pricePerNight){
+    private double getSubtotal(int numberOfNight, double pricePerNight){
         
         return (numberOfNight*pricePerNight);
     }
@@ -152,7 +174,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         rec = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        changeButtonActionPerformed = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -197,7 +219,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -250,20 +272,10 @@ public class RestaurentHotel extends javax.swing.JFrame {
 
         numberOfNight.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         numberOfNight.setEnabled(false);
-        numberOfNight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numberOfNightActionPerformed(evt);
-            }
-        });
 
         roomType.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         roomType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DELUX", "SUPER DELUX" }));
         roomType.setEnabled(false);
-        roomType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roomTypeActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -305,7 +317,9 @@ public class RestaurentHotel extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(pricePerNight, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(numberOfNight, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(hotelCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(hotelCheckBox)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -381,14 +395,14 @@ public class RestaurentHotel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "TABLE NO.", "ITEMS", "QUANTITY", "PRICE", "GST 5%", "LINE TOTAL"
+                "ITEMS", "QUANTITY", "RATE", "PRICE", "GST 5%", "LINE TOTAL"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                true, false, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -442,8 +456,8 @@ public class RestaurentHotel extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addToCart, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addComponent(addToCart, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4))
@@ -463,7 +477,9 @@ public class RestaurentHotel extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(restaurantGstCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
-            .addComponent(restaurantCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(restaurantCheckBox)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -735,11 +751,13 @@ public class RestaurentHotel extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         jLabel20.setText("BALANCE :");
 
-        jButton2.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
-        jButton2.setText("GENERATE BILL");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        changeButtonActionPerformed.setBackground(new java.awt.Color(255, 0, 0));
+        changeButtonActionPerformed.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 18)); // NOI18N
+        changeButtonActionPerformed.setForeground(new java.awt.Color(255, 255, 255));
+        changeButtonActionPerformed.setText("GENERATE BILL");
+        changeButtonActionPerformed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                changeButtonActionPerformedActionPerformed(evt);
             }
         });
 
@@ -750,7 +768,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(changeButtonActionPerformed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -773,7 +791,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
                     .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(changeButtonActionPerformed, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -865,14 +883,6 @@ public class RestaurentHotel extends javax.swing.JFrame {
         
     }                                                  
 
-    private void numberOfNightActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-    }                                             
-
-    private void roomTypeActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
     private void hotelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
         
@@ -919,10 +929,10 @@ public class RestaurentHotel extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel)hotelTable.getModel();
         int n = Integer.parseInt(numberOfNight.getText());
-        int p = Integer.parseInt(pricePerNight.getText());
+        double p = Double.parseDouble(pricePerNight.getText());
         double sum =0d;
         double gst=0d;
-        int sb=getSubtotal(n, p);
+        double sb=getSubtotal(n, p);
         if(hotelGstCheckBox.isSelected()){
           gst = getGst(sb);
         }else{
@@ -963,8 +973,8 @@ public class RestaurentHotel extends javax.swing.JFrame {
 
     private void addToCartActionPerformed(java.awt.event.ActionEvent evt) {                                          
         DefaultTableModel model = (DefaultTableModel)restaurantTable.getModel();
-        int q = Integer.parseInt(this.quantity.getText());
-        double p = 0d;
+        int quan = Integer.parseInt(this.quantity.getText());
+        
         double gst =0d;
         double sum = 0d;
         this.connectDatabase();
@@ -988,7 +998,8 @@ public class RestaurentHotel extends javax.swing.JFrame {
             
         }
         //price check and calculate
-         double netp =(double) q*p;
+        double rate = p; 
+         double netp =(double) quan*rate;
          //Gst check anc calculete
          if(restaurantGstCheckBox.isSelected()){
           gst = getGstR(netp);
@@ -1000,7 +1011,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
          
          
         double l =netp+gst;  
-        model.addRow(new Object[]{tableNumber.getSelectedItem(),items.getSelectedItem(),q,netp,gst,l});
+        model.addRow(new Object[]{items.getSelectedItem(),quan,rate,netp,gst,l});
         for(int i =0;i<restaurantTable.getRowCount();i++){
             
         sum+= (double)(restaurantTable.getValueAt(i, 5));
@@ -1047,7 +1058,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         
     }                                               
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void changeButtonActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {                                                            
         double receivedAmt = Double.parseDouble(rec.getText());
         double payableAmt = Double.parseDouble(payableAmount.getText());
         double bal;
@@ -1059,7 +1070,22 @@ public class RestaurentHotel extends javax.swing.JFrame {
         balance.setText(""+bal);
         }
        
-    }                                        
+        try {
+            this.CreateInvoice();
+        } catch (DocumentException ex) {
+            Logger.getLogger(RestaurentHotel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RestaurentHotel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+    }                                                           
 
     /**
      * @param args the command line arguments
@@ -1087,10 +1113,11 @@ public class RestaurentHotel extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RestaurentHotel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+          CashierName = args[0];
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new RestaurentHotel().setVisible(true);
             }
         });
@@ -1102,6 +1129,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
     private javax.swing.JTextField balance;
     private javax.swing.JTextField billNumber;
     private javax.swing.JButton calculateButton;
+    private javax.swing.JButton changeButtonActionPerformed;
     private com.toedter.calendar.JDateChooser checkInDate;
     private com.toedter.calendar.JDateChooser checkOutDate;
     private javax.swing.JTextField discount;
@@ -1113,7 +1141,6 @@ public class RestaurentHotel extends javax.swing.JFrame {
     private javax.swing.JTable hotelTable;
     private javax.swing.JComboBox<String> items;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1168,8 +1195,10 @@ public class RestaurentHotel extends javax.swing.JFrame {
     private javax.swing.JTextField waiterName;
     private javax.swing.JTextField zipCode;
     // End of variables declaration                   
-
+    private static final String RESULT = "F:/Invoice.pdf";
+    private static  String CashierName = "";
     private  Connection con= null; 
+    private double p = 0d;
     private double getGst(double sb) {
         
         return((18*sb)/100);      //To change body of generated methods, choose Tools | Templates.
@@ -1179,4 +1208,457 @@ public class RestaurentHotel extends javax.swing.JFrame {
         return((5*sb)/100);      //To change body of generated methods, choose Tools | Templates.
     }
     
+    
+    public void CreateInvoice() throws DocumentException, IOException{
+    
+    // step 1
+        Document document = new Document();
+        PdfWriter writer = null;
+        // step 2
+        try{
+         writer =PdfWriter.getInstance(document, new FileOutputStream(RESULT));
+        }catch(FileNotFoundException e){
+            JOptionPane.showMessageDialog(this, "FileNotFound", "Error", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        document.setPageSize(PageSize.A4);
+        document.setMargins(15, 15, 15, 15);
+        document.setMarginMirroring(true);
+        // step 3
+        document.open();
+        // write your document here
+        
+        
+        
+        
+        //--------------------------------------------------------------Do not edit it----------------------------------------------------------------
+        
+        Phrase[] phrase =  {new Phrase(),new Phrase(),new Phrase(),new Phrase()};
+        Paragraph[] paragraph = {new Paragraph(),new Paragraph(),new Paragraph(),new Paragraph()};
+        
+        
+        phrase[0].add(new Chunk("HOTEL PUNNU INTERNATIONAL",new Font(Font.FontFamily.HELVETICA,18,Font.BOLD)));
+        phrase[0].add(Chunk.NEWLINE);
+        
+        Font firstHeading = new Font(Font.FontFamily.COURIER, 15, Font.BOLD);
+        Chunk title = new Chunk("LIQUID BAR & RESTAURANT",firstHeading);
+        phrase[0].add(title);
+        phrase[0].add(Chunk.NEWLINE);
+        //phrase[0].add(Chunk.NEWLINE);
+        
+        phrase[0].add(new Chunk("7-Court Road,Amritsar",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
+        phrase[0].add(Chunk.NEWLINE);
+        
+        
+        phrase[0].add(new Chunk("Ph:0183-5016767",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.NORMAL)));
+        phrase[0].add(Chunk.NEWLINE);
+        
+        
+        phrase[0].add(new Chunk("Sale Invoice",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.ITALIC)));
+        phrase[0].add(Chunk.NEWLINE);
+        phrase[0].add(Chunk.NEWLINE);
+        paragraph[0].add(phrase[0]);
+        paragraph[0].setAlignment(Element.ALIGN_CENTER);   
+        document.add(paragraph[0]);
+      
+        //------------------------------------------------------------------------------------------------------------------------
+        
+        
+        
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        //Add Invoice No. Here 
+        //Add system date 
+        //Add time
+        //Add Cahier Name
+        //Get Invoice No.  /Date /Time From DataBase
+        PdfPCell top1 = getCell("INVOICE NO.:"+billNumber.getText(),PdfPCell.ALIGN_LEFT);//Add invoice no. here;
+        top1.setBorderWidthTop(1f);
+        table.addCell(top1);
+        
+        PdfPCell top2 =getCell("DATE:",PdfPCell.ALIGN_RIGHT); //Add System current Date here;
+        top2.setBorderWidthTop(1f);
+        table.addCell(top2);
+        PdfPCell top3 =getCell("TIME:",PdfPCell.ALIGN_LEFT);//Add System current TIME here;
+        top3.setBorderWidthBottom(1f);
+        table.addCell(top3);
+        PdfPCell top4 =getCell("CASHIER NAME:"+CashierName,PdfPCell.ALIGN_RIGHT);//Add System USER NAME here;
+        top4.setBorderWidthBottom(1f);
+        table.addCell(top4);
+        document.add(table);
+        document.add(addEmptyLine(new Paragraph(""), new Phrase(new Chunk(""))));
+
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+       if(hotelCheckBox.isSelected()) {// Add Check Box condition here
+        //if customer selected hotel then print below
+        PdfPTable table2 = new PdfPTable(4);
+        table2.setWidthPercentage(100);
+        table2.setWidths(new float[] {69f,70f,45f,145f});
+        
+        
+        PdfPCell cellH = createHeaderCell("BILL TO: ");
+        cellH.setColspan(4);
+        cellH.setBorderWidthBottom(2f);
+        cellH.setBorderWidthRight(2f);
+        cellH.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table2.addCell(cellH);
+        table2.addCell(createValueCell("CUSTOMER NAME:"));
+        table2.addCell(createValueCell(firstName.getText()+" "+lastName.getText()));//Add customer Name here
+        table2.addCell(createValueCell("ADDRESS:"));
+        table2.addCell(createValueCell(address.getText()));//Add address here
+        table2.addCell(createValueCell("MOBILE NO:"));
+        table2.addCell(createValueCell(mobileNumber.getText()));//Add mobile no. here
+        table2.addCell(createValueCell("ZIPCODE:"));
+        table2.addCell(createValueCell(zipCode.getText()));//Add zipcode here
+         document.add(table2);
+        
+        //------------------------------------------------------------------------------
+        document.add(addEmptyLine(new Paragraph(""), new Phrase(new Chunk(""))));
+        
+         PdfPTable table3 = new PdfPTable(7);
+        table3.setWidthPercentage(100);
+        
+        //table3.setWidths(new float[] {35f,150f,30f,45f,45f});
+        
+        
+ 
+    PdfPCell cell2 = createTitleCell("HOTEL BILL", 7);
+        cell2.setHorizontalAlignment(Element.ALIGN_CENTER);    
+        
+        cell2.setBorder(0);
+        cell2.setPadding(4f);
+        cell2.setBorderWidthBottom(2f);// For Adding Bottom Border
+        table3.addCell(cell2);
+        table3.addCell(createHeaderCell("ROOM #"));
+        table3.addCell(createHeaderCell("DESC."));//ROOM TYPE // OTHER ROOM HEATER
+        table3.addCell(createHeaderCell("CHECK IN"));
+        table3.addCell(createHeaderCell("CHECK OUT"));
+        table3.addCell(createHeaderCell("# NIGHT"));
+        table3.addCell(createHeaderCell("RATE"));
+        table3.addCell(createHeaderCell("LINE TOTAL"));
+        //-------------------------------------------------------------------------------------------------
+        //ADD TABLE DATA HERE use for loop
+        //PdfPCell cellTableNo =createValueCell("T101"); 
+        //cellTableNo.setRowspan(3);// specify no. of rows to be printed
+        //cellTableNo.setVerticalAlignment(Element.ALIGN_MIDDLE);
+       // table3.addCell(cellTableNo);
+          
+       //For Reading Date
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+String checkIn = dateFormat.format(checkInDate.getDate());
+String checkOut = dateFormat.format(checkOutDate.getDate());
+
+       
+       
+      for(int i =0;i<hotelTable.getRowCount();i++){// specify no. of rows to be of JHotelTable
+          table3.addCell(createValueCell((String)hotelTable.getValueAt(i,0)));//Add room no.
+          table3.addCell(createValueCell((String)roomType.getSelectedItem()));// Room type or services
+          table3.addCell(createValueCell(checkIn));//Check In Date
+          table3.addCell(createValueCell(checkOut));//Check Out Date
+          table3.addCell(createValueCell(""+hotelTable.getValueAt(i,1)));// #Nights
+          table3.addCell(createValueCell(""+hotelTable.getValueAt(i,2)));//price per night
+          table3.addCell(createValueCell(""+hotelTable.getValueAt(i,3)));//line total 
+      }
+        
+        
+        //Add Total here  
+        table3.addCell(createTitleCell("SUBTOTAL:", 6));
+        table3.addCell(createTitleCell("Rs."+getHotelSubtotal(), 1));// ADD TOTAL HERE
+        table3.addCell(createTitleCell("SGST:", 6));
+        table3.addCell(createTitleCell("Rs."+(getHotelGst()/2), 1));// ADD SGST HERE
+        table3.addCell(createTitleCell("CGST:", 6));
+        table3.addCell(createTitleCell("Rs."+(getHotelGst()/2), 1));//ADD CGST HERE
+        table3.addCell(createTitleCell("TOTAL:", 6));
+        table3.addCell(createTitleCell("Rs."+roomBillTotal.getText(), 1));//Add Total Here
+        document.add(table3);
+        document.add(addEmptyLine(new Paragraph(""), new Phrase(new Chunk(""))));
+        
+    }
+        
+        
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      //If User slected Restauran/Bar CheckBox Use Below Format
+        if(restaurantCheckBox.isSelected()){
+        PdfPTable table1 = new PdfPTable(5);
+        table1.setWidthPercentage(100);
+        
+        table1.setWidths(new float[] {35f,150f,30f,45f,45f});
+        
+        
+ 
+    PdfPCell cell = createTitleCell("RESTAURANT /BAR BILL", 5);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);    
+        
+        cell.setBorder(0);
+        cell.setPadding(4f);
+        cell.setBorderWidthBottom(2f);// For Adding Bottom Border
+        table1.addCell(cell);
+        table1.addCell(createHeaderCell("TABLE #"));
+        table1.addCell(createHeaderCell("ITEMS"));
+        table1.addCell(createHeaderCell("RATE"));
+        table1.addCell(createHeaderCell("QUANTITY"));
+        table1.addCell(createHeaderCell("AMOUNT"));
+      
+        //ADD TABLE DATA HERE use for loop
+        PdfPCell cellTableNo =createValueCell(""+tableNumber.getSelectedItem()); //Add table no. here 
+        cellTableNo.setRowspan(restaurantTable.getRowCount());// specify no. of rows to be printed
+        cellTableNo.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table1.addCell(cellTableNo);
+          
+      for(int i =0;i<restaurantTable.getRowCount();i++){// specify no. of rows to be printed
+          table1.addCell(createValueCell(restaurantTable.getValueAt(i, 0).toString()));//Item
+          table1.addCell(createValueCell(restaurantTable.getValueAt(i,2).toString()));//Rate
+          table1.addCell(createValueCell(restaurantTable.getValueAt(i,1).toString()));//quantity
+          table1.addCell(createValueCell(restaurantTable.getValueAt(i, 3).toString()));//Net Price total
+       
+      }
+        
+        
+        //Add Total here  
+        table1.addCell(createTitleCell("SUBTOTAL:", 4));
+        table1.addCell(createTitleCell("Rs."+getRestaurantSubtotal(), 1));// ADD TOTAL HERE
+        table1.addCell(createTitleCell("SGST:", 4));
+        table1.addCell(createTitleCell("Rs."+(getRestaurantGst()/2), 1));// ADD SGST HERE
+        table1.addCell(createTitleCell("CGST:", 4));
+        table1.addCell(createTitleCell("Rs."+(getRestaurantGst()/2), 1));//ADD CGST HERE
+        table1.addCell(createTitleCell("TOTAL:", 4));
+        table1.addCell(createTitleCell("Rs."+restaurantBillTotal.getText(), 1));//Add total here
+        document.add(table1);
+        }
+        
+        
+        
+        //document.add(addEmptyLine(new Paragraph(""), new Phrase(new Chunk(""))));
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //Restaurant Bill total
+        //Hotel Bill total
+        //Net Amount
+        //Received Amount
+  
+        phrase[2].add(new Chunk("---------------------------------------------------------------------------------------------------------------------------------------------",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD)));
+        phrase[2].add(Chunk.NEWLINE);
+      
+        //DISCOUNT AMOUNT
+        phrase[2].add(new Chunk("DISCOUNT AMOUNT: Rs."+discount.getText()+"/-",new Font(Font.FontFamily.COURIER,12,Font.BOLD)));
+        phrase[2].add(Chunk.NEWLINE);
+        
+        
+        
+        //NET AMOUNT
+        
+        phrase[2].add(new Chunk("NET AMOUNT: Rs."+payableAmount.getText()+"/-",new Font(Font.FontFamily.COURIER,12,Font.BOLD)));
+        phrase[2].add(Chunk.NEWLINE);
+        
+        //Received Amount
+        
+        phrase[2].add(new Chunk("RECEIVED AMOUNT: Rs."+rec.getText()+"/-",new Font(Font.FontFamily.COURIER,12,Font.BOLD)));
+        phrase[2].add(Chunk.NEWLINE);
+        
+        //BALANCE
+        phrase[2].add(new Chunk("BALANCE: Rs."+balance.getText()+"/-",new Font(Font.FontFamily.COURIER,12,Font.BOLD)));
+        phrase[2].add(Chunk.NEWLINE);
+        
+        
+        phrase[2].add(new Chunk("---------------------------------------------------------------------------------------------------------------------------------------------",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD)));
+       // phrase[2].add(Chunk.NEWLINE);
+        
+        phrase[2].add(new Chunk("GSTIN: 656521G656565",new Font(Font.FontFamily.TIMES_ROMAN,12,Font.BOLD)));//ADD YOUR GST NO. HERE
+        phrase[2].add(Chunk.NEWLINE);
+
+       
+        paragraph[2].add(phrase[2]);
+        document.add(paragraph[2]);
+        
+        phrase[3].add(new Chunk("Thank you,Please Visit Again",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD)));//ADD YOUR GST NO. HERE
+        
+      
+        
+        paragraph[3].add(phrase[3]);
+        paragraph[3].setAlignment(Element.ALIGN_CENTER);
+        document.add(paragraph[3]);
+        
+        //--------------------------Add footer here----------
+        MyFooter myFooter = new MyFooter();
+        myFooter.onEndPage(writer, document);
+        
+        
+        document.addCreator("Nishant");
+        document.addHeader("a", "Nishnat");
+        document.close();
+ 
+    
+    
+    
+    
+}
+    private static Paragraph addEmptyLine(Paragraph p,Phrase ph) {
+        Paragraph space = p ;
+        Phrase spacep= ph;
+        spacep.add(Chunk.NEWLINE);
+        space.add(spacep);
+        return space;
+    }
+     
+     // create cells
+    private static PdfPCell createValueCell(String text){
+        // font
+        Font font = new Font(Font.FontFamily.COURIER, 11, Font.BOLD, BaseColor.BLACK);
+ 
+        // create cell
+        PdfPCell cell = new PdfPCell(new Phrase(text,font));
+ 
+        // set style
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+         // padding
+        cell.setPadding(4f);
+ 
+        // background color
+        cell.setBackgroundColor(new BaseColor(255,255,255));
+ 
+        // border
+        //cell.setBorder(0);
+        //cell.setBorderWidthLeft(1f);
+        //cell.setBorderWidthRight(1f);
+        
+        return cell;
+    }
+    
+    
+    private static PdfPCell createHeaderCell(String text){
+        // font
+        Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
+ 
+        // create cell
+        PdfPCell cell = new PdfPCell(new Phrase(text,font));
+ 
+        // set style
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+         // padding
+        cell.setPadding(3f);
+ 
+        // background color
+        cell.setBackgroundColor(new BaseColor(255,255,255));
+ 
+        // border
+        
+        return cell;
+    }
+    
+    
+    private static PdfPCell createTitleCell(String text,int s){
+        // font
+        Font cellFont = new Font(Font.FontFamily.HELVETICA,11,Font.BOLD,BaseColor.BLACK);
+ 
+        // create cell
+        PdfPCell cell = new PdfPCell(new Phrase(text,cellFont));
+        cell.setColspan(s);
+ 
+        // set style
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+         // padding
+      
+ 
+        // background color
+        cell.setBackgroundColor(new BaseColor(255,255,255));
+        
+        
+        
+        // padding
+        cell.setPadding(2f);
+       
+ 
+        // background color
+        cell.setBackgroundColor(new BaseColor(255,255,255));
+ 
+        // border
+        //cell.setBorder(0);
+ 
+        return cell;
+    }
+    
+    public static PdfPCell getCell(String str,int alignment){
+        
+        Font catFont = new Font(Font.FontFamily.COURIER, 11,Font.BOLD, BaseColor.BLACK);
+
+        Phrase phrase = new Phrase(new Chunk(str,catFont));
+        phrase.setFont(catFont);
+        
+    PdfPCell cell = new PdfPCell(phrase);
+    cell.setPadding(0);
+    cell.setHorizontalAlignment(alignment);
+    cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+    cell.setBorder(PdfPCell.NO_BORDER);
+    //cell.setBorderWidthTop(1);
+    //cell.setBorderWidthBottom(1);
+    cell.setPaddingTop(3f);
+    cell.setPaddingBottom(4f);
+    return cell;
+    }
+    private double getHotelSubtotal(){
+        double sum = 0d;
+        for(int i =0;i<hotelTable.getRowCount();i++){
+            
+        sum+= (double)(hotelTable.getValueAt(i, 3));
+           }
+        return sum;
+        
+    }
+    
+    private double getHotelGst(){
+        double sum=0d;
+        for(int i =0;i<hotelTable.getRowCount();i++){
+            
+        sum+= (double)(hotelTable.getValueAt(i, 4));
+           }
+        
+        return sum;
+    }
+    
+    private double getRestaurantSubtotal(){
+        double sum = 0d;
+        for(int i =0;i<restaurantTable.getRowCount();i++){
+            
+        sum+= (double)(restaurantTable.getValueAt(i, 3));
+           }
+        return sum;
+        
+    }
+    
+    
+    private double getRestaurantGst(){
+        double sum=0d;
+        for(int i =0;i<restaurantTable.getRowCount();i++){
+            
+        sum+= (double)(restaurantTable.getValueAt(i, 4));
+           }
+        
+        return sum;
+    }
+    
+    public void save(){
+        
+     this.connectDatabase();   
+        
+        try{
+            
+            
+        PreparedStatement psmt = con.prepareStatement("SELECT price FROM menu_item where name ="+"\""+items.getSelectedItem()+"\"");
+        ResultSet rs = psmt.executeQuery();
+        
+        while(rs.next()){
+        p= rs.getDouble("price");
+        }
+       
+        con.close();
+        psmt.close();
+        rs.close();
+            
+        }catch(SQLException my){
+            JOptionPane.showMessageDialog(this, my.getMessage(),"SQLError",  JOptionPane.ERROR_MESSAGE);
+            
+            
+        }
+        
+    }
 }
