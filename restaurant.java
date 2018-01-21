@@ -27,12 +27,11 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextField;
 /**
  *
  * @author Intel
@@ -931,15 +930,15 @@ public class RestaurentHotel extends javax.swing.JFrame {
         int n = Integer.parseInt(numberOfNight.getText());
         double p = Double.parseDouble(pricePerNight.getText());
         double sum =0d;
-        double gst=0d;
+        
         double sb=getSubtotal(n, p);
         if(hotelGstCheckBox.isSelected()){
-          gst = getGst(sb);
+          gstH = getGst(sb);
         }else{
             
-            gst=0;
+            gstH=0;
         }
-        model.addRow(new Object[]{roomNumber.getSelectedItem(),n,p,sb ,gst,gst+sb});
+        model.addRow(new Object[]{roomNumber.getSelectedItem(),n,p,sb ,gstH,gstH+sb});
         for(int i =0;i<hotelTable.getRowCount();i++){
             
         sum+= (double)(hotelTable.getValueAt(i, 5));
@@ -975,7 +974,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel)restaurantTable.getModel();
         int quan = Integer.parseInt(this.quantity.getText());
         
-        double gst =0d;
+        
         double sum = 0d;
         this.connectDatabase();
         try{
@@ -1002,16 +1001,16 @@ public class RestaurentHotel extends javax.swing.JFrame {
          double netp =(double) quan*rate;
          //Gst check anc calculete
          if(restaurantGstCheckBox.isSelected()){
-          gst = getGstR(netp);
+          gstR = getGstR(netp);
         }else{
             
-            gst=0d;
+            gstR=0d;
         }
          
          
          
-        double l =netp+gst;  
-        model.addRow(new Object[]{items.getSelectedItem(),quan,rate,netp,gst,l});
+        double l =netp+gstR;  
+        model.addRow(new Object[]{items.getSelectedItem(),quan,rate,netp,gstR,l});
         for(int i =0;i<restaurantTable.getRowCount();i++){
             
         sum+= (double)(restaurantTable.getValueAt(i, 5));
@@ -1070,6 +1069,25 @@ public class RestaurentHotel extends javax.swing.JFrame {
         balance.setText(""+bal);
         }
        
+        //ADD CONDITION NOT TO COMMIT UNTIL ALL ARE FILLED
+        
+        this.generateBill();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         try {
             this.CreateInvoice();
         } catch (DocumentException ex) {
@@ -1196,12 +1214,26 @@ public class RestaurentHotel extends javax.swing.JFrame {
     private javax.swing.JTextField zipCode;
     // End of variables declaration                   
     private static final String RESULT = "F:/Invoice.pdf";
+    private double gstR =0d;
+    private  double gstH =0d;
     private static  String CashierName = "";
     private  Connection con= null; 
     private double p = 0d;
+    private  LocalDate getDate(){ 
+            
+           return LocalDate.now();
+    
+    }
+    private  LocalTime getTime(){ 
+            
+           return LocalTime.now();
+    
+    }
+    
+    
     private double getGst(double sb) {
         
-        return((18*sb)/100);      //To change body of generated methods, choose Tools | Templates.
+        return((12*sb)/100);      //To change body of generated methods, choose Tools | Templates.
     }
     private double getGstR(double sb) {
         
@@ -1661,5 +1693,68 @@ String checkOut = dateFormat.format(checkOutDate.getDate());
         }
         
     }
-}
 
+    private void generateBill() {
+     
+        this.connectDatabase();
+      try{
+        PreparedStatement psmt = con.prepareStatement("INSERT INTO MAIN_BILL(RESTAURANT_BILL,RESTAURANT_GST,ROOM_BILL_TOTAL,ROOM_GST,PAYABLE_AMOUNT,DISCOUNT,RECEIVED_AMOUNT,BILL_DATE,BILL_TIME) VALUES(?,?,?,?,?,?,?,?,?)");
+        psmt.setDouble(2,Double.parseDouble(restaurantBillTotal.getText()));
+        psmt.setDouble(3,gstR);
+        psmt.setDouble(4,Double.parseDouble(roomBillTotal.getText()));
+        psmt.setDouble(5,gstH);
+        psmt.setDouble(6,Double.parseDouble(payableAmount.getText()));
+        psmt.setDouble(7,Double.parseDouble(discount.getText()));
+        psmt.setDouble(8,Double.parseDouble(rec.getText()));
+       
+        
+    // Editing required    
+        psmt.setDouble(9,Double.parseDouble(restaurantBillTotal.getText()));
+        psmt.setDouble(10,Double.parseDouble(restaurantBillTotal.getText()));
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        int i  = psmt.executeUpdate();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        while(rs.next()){
+        items.addItem(rs.getString(1));
+     
+        }
+       
+        con.close();
+        psmt.close();
+        rs.close();
+      }catch(SQLException my){
+      // perform  excepiton here please
+        JOptionPane.showMessageDialog(this, my.getMessage(),"SQLError",  JOptionPane.ERROR_MESSAGE);
+      }
+        
+        
+    }
+}
