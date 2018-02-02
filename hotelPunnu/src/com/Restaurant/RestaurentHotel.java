@@ -42,10 +42,15 @@ public class RestaurentHotel extends javax.swing.JFrame {
      * Creates new form RestaurentHotel
      */
     public RestaurentHotel() {
+        
+        if(CashierName.equals("admin")){
+        add.setEnabled(false);
+        System.out.println("Matches");
+        }
         initComponents();
         this.setLocationRelativeTo(null);
          this.intItems();
-         resetButton.setText(CashierName);//Just for Test
+       //  resetButton.setText(CashierName);//Just for Test
      
        
        
@@ -56,7 +61,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         return (numberOfNight*pricePerNight);
     }
     
-    private void connectDatabase(){
+    protected void connectDatabase(){
     try{
         Class.forName("com.mysql.jdbc.Driver");
      }catch(ClassNotFoundException e){
@@ -73,6 +78,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
     
     
     private void intItems(){
+        
       
      this.connectDatabase();
       try{
@@ -167,7 +173,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         resetButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        add = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         balance = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -176,30 +182,40 @@ public class RestaurentHotel extends javax.swing.JFrame {
         changeButtonActionPerformed = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "HOTEL BILL FORM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 18))); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(0, 105, 92));
+
+        jPanel4.setBackground(new java.awt.Color(0, 105, 92));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "HOTEL BILL FORM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("No. Of Nights:");
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Room Nos.:");
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Room Type:");
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Check Out:");
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Check In :");
 
+        roomNumber.setBackground(new java.awt.Color(0, 105, 92));
         roomNumber.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         roomNumber.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "112", "113", "124", "125", "126", "127", "128", "131", "132", "201", "202", "203", "204", "205", "206", "207", "208", "209", "210", "211", "218", "219", "220", "221", "222", "212", "214", "215", "216", " " }));
         roomNumber.setEnabled(false);
 
-        hotelAddButton.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        hotelAddButton.setBackground(new java.awt.Color(255, 0, 0));
+        hotelAddButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        hotelAddButton.setForeground(new java.awt.Color(255, 255, 255));
         hotelAddButton.setText("ADD");
         hotelAddButton.setEnabled(false);
         hotelAddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -208,7 +224,9 @@ public class RestaurentHotel extends javax.swing.JFrame {
             }
         });
 
+        hotelTable.setBackground(new java.awt.Color(0, 105, 92));
         hotelTable.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        hotelTable.setForeground(new java.awt.Color(255, 255, 255));
         hotelTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -236,17 +254,21 @@ public class RestaurentHotel extends javax.swing.JFrame {
         jScrollPane1.setViewportView(hotelTable);
 
         jLabel14.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Price Per Night");
 
         pricePerNight.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         pricePerNight.setEnabled(false);
 
         hotelGstCheckBox.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        hotelGstCheckBox.setForeground(new java.awt.Color(240, 240, 240));
         hotelGstCheckBox.setSelected(true);
         hotelGstCheckBox.setText("Apply GST");
         hotelGstCheckBox.setEnabled(false);
 
-        hotelRemoveButton.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        hotelRemoveButton.setBackground(new java.awt.Color(255, 0, 0));
+        hotelRemoveButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        hotelRemoveButton.setForeground(new java.awt.Color(255, 255, 255));
         hotelRemoveButton.setText("REMOVE");
         hotelRemoveButton.setEnabled(false);
         hotelRemoveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +278,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         });
 
         hotelCheckBox.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 18)); // NOI18N
+        hotelCheckBox.setForeground(new java.awt.Color(255, 255, 255));
         hotelCheckBox.setText("HOTEL BILL");
         hotelCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,15 +286,18 @@ public class RestaurentHotel extends javax.swing.JFrame {
             }
         });
 
+        checkOutDate.setBackground(new java.awt.Color(0, 105, 92));
         checkOutDate.setDateFormatString(" yyyy-MM-dd");
         checkOutDate.setEnabled(false);
 
+        checkInDate.setBackground(new java.awt.Color(0, 105, 92));
         checkInDate.setDateFormatString(" yyyy-MM-dd");
         checkInDate.setEnabled(false);
 
         numberOfNight.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         numberOfNight.setEnabled(false);
 
+        roomType.setBackground(new java.awt.Color(0, 105, 92));
         roomType.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         roomType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DELUX", "SUPER DELUX" }));
         roomType.setEnabled(false);
@@ -362,12 +388,15 @@ public class RestaurentHotel extends javax.swing.JFrame {
                                 .addComponent(hotelAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(hotelRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RESTAURANT/BAR BILL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 18))); // NOI18N
+        jPanel5.setBackground(new java.awt.Color(0, 105, 92));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RESTAURANT/BAR BILL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel5.setForeground(new java.awt.Color(255, 255, 255));
 
         restaurantCheckBox.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 14)); // NOI18N
+        restaurantCheckBox.setForeground(new java.awt.Color(255, 255, 255));
         restaurantCheckBox.setText("RESTAURANT / BAR BILL");
         restaurantCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -382,13 +411,18 @@ public class RestaurentHotel extends javax.swing.JFrame {
         waiterName.setEnabled(false);
 
         jLabel24.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("ITEMS.");
 
+        tableNumber.setBackground(new java.awt.Color(0, 105, 92));
         tableNumber.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        tableNumber.setForeground(new java.awt.Color(255, 255, 255));
         tableNumber.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "T101", "T102", "T103", "T104", "T105", "T106", "T107", "T108", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8" }));
         tableNumber.setEnabled(false);
 
+        restaurantTable.setBackground(new java.awt.Color(0, 105, 92));
         restaurantTable.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        restaurantTable.setForeground(new java.awt.Color(255, 255, 255));
         restaurantTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -415,7 +449,9 @@ public class RestaurentHotel extends javax.swing.JFrame {
         restaurantTable.setEnabled(false);
         jScrollPane2.setViewportView(restaurantTable);
 
-        addToCart.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        addToCart.setBackground(new java.awt.Color(255, 0, 0));
+        addToCart.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        addToCart.setForeground(new java.awt.Color(255, 255, 255));
         addToCart.setText("ADD TO CART");
         addToCart.setEnabled(false);
         addToCart.addActionListener(new java.awt.event.ActionListener() {
@@ -424,7 +460,9 @@ public class RestaurentHotel extends javax.swing.JFrame {
             }
         });
 
-        removeOrder.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        removeOrder.setBackground(new java.awt.Color(255, 0, 0));
+        removeOrder.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        removeOrder.setForeground(new java.awt.Color(255, 255, 255));
         removeOrder.setText("REMOVE ORDER");
         removeOrder.setEnabled(false);
         removeOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -434,18 +472,24 @@ public class RestaurentHotel extends javax.swing.JFrame {
         });
 
         jLabel28.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("TABLE NO.");
 
+        items.setBackground(new java.awt.Color(0, 105, 92));
         items.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        items.setForeground(new java.awt.Color(255, 255, 255));
         items.setEnabled(false);
 
         jLabel29.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setText("QUANTITY");
 
         jLabel30.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setText("WAITER NAME:");
 
         restaurantGstCheckBox.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        restaurantGstCheckBox.setForeground(new java.awt.Color(240, 240, 240));
         restaurantGstCheckBox.setSelected(true);
         restaurantGstCheckBox.setText("Apply GST");
         restaurantGstCheckBox.setEnabled(false);
@@ -456,7 +500,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(addToCart, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(addToCart, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4))
@@ -511,30 +555,33 @@ public class RestaurentHotel extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(0, 145, 234));
+        jPanel1.setBackground(new java.awt.Color(255, 61, 0));
 
         jLabel1.setBackground(new java.awt.Color(0, 145, 234));
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("WELCOME TO HOTEL PUNNU BILLING SYSTEM");
+        jLabel1.setText("WELCOME TO POINT OF SALE");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(383, 383, 383)
                 .addComponent(jLabel1)
-                .addGap(305, 305, 305))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INVOICE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 18))); // NOI18N
+        jPanel6.setBackground(new java.awt.Color(0, 105, 92));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INVOICE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel6.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel15.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("ROOM  BILL TOTAL");
 
         restaurantBillTotal.setEditable(false);
@@ -542,12 +589,16 @@ public class RestaurentHotel extends javax.swing.JFrame {
         restaurantBillTotal.setText("0");
 
         jLabel17.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("RESTAURANT BILL TOTAL");
 
         jLabel18.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("DISCOUNT (AMT)");
 
+        jLabel21.setBackground(new java.awt.Color(0, 105, 92));
         jLabel21.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("PAYABLE AMOUNT");
 
         payableAmount.setEditable(false);
@@ -560,7 +611,9 @@ public class RestaurentHotel extends javax.swing.JFrame {
         roomBillTotal.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         roomBillTotal.setText("0");
 
-        calculateButton.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        calculateButton.setBackground(new java.awt.Color(255, 0, 0));
+        calculateButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        calculateButton.setForeground(new java.awt.Color(255, 255, 255));
         calculateButton.setText("CALCULATE");
         calculateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -613,25 +666,31 @@ public class RestaurentHotel extends javax.swing.JFrame {
                 .addComponent(calculateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CUSTOMER INFORMATION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 24))); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(0, 105, 92));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CUSTOMER INFORMATION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Berlin Sans FB Demi", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
         mobileNumber.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Mobile No.");
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Address.");
 
         address.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("First Name");
 
         billNumber.setEditable(false);
         billNumber.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
 
         jLabel25.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("ZIPCODE");
 
         lastName.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
@@ -639,9 +698,11 @@ public class RestaurentHotel extends javax.swing.JFrame {
         firstName.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
 
         jLabel26.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setText("BILLNO.");
 
         jLabel27.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setText("Last Name");
 
         zipCode.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
@@ -703,16 +764,33 @@ public class RestaurentHotel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        resetButton.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        resetButton.setBackground(new java.awt.Color(255, 0, 0));
+        resetButton.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        resetButton.setForeground(new java.awt.Color(255, 255, 255));
         resetButton.setText("GENERATE NEW BILL/RESET");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
 
+        jPanel7.setBackground(new java.awt.Color(0, 105, 92));
         jPanel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("PRINT");
 
-        jButton3.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
-        jButton3.setText("REPORTS");
+        add.setBackground(new java.awt.Color(255, 0, 0));
+        add.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        add.setForeground(new java.awt.Color(255, 255, 255));
+        add.setText("Add Items");
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -721,7 +799,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -731,10 +809,11 @@ public class RestaurentHotel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel8.setBackground(new java.awt.Color(0, 105, 92));
         jPanel8.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         balance.setEditable(false);
@@ -742,16 +821,18 @@ public class RestaurentHotel extends javax.swing.JFrame {
         balance.setText("0");
 
         jLabel19.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("RECEIVED AMOUNT");
 
         rec.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         rec.setText("0");
 
         jLabel20.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("BALANCE :");
 
         changeButtonActionPerformed.setBackground(new java.awt.Color(255, 0, 0));
-        changeButtonActionPerformed.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 18)); // NOI18N
+        changeButtonActionPerformed.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         changeButtonActionPerformed.setForeground(new java.awt.Color(255, 255, 255));
         changeButtonActionPerformed.setText("GENERATE BILL");
         changeButtonActionPerformed.addActionListener(new java.awt.event.ActionListener() {
@@ -789,8 +870,8 @@ public class RestaurentHotel extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(changeButtonActionPerformed, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(changeButtonActionPerformed, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -804,7 +885,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
                     .addComponent(resetButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -818,11 +899,12 @@ public class RestaurentHotel extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -832,7 +914,8 @@ public class RestaurentHotel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -910,13 +993,6 @@ public class RestaurentHotel extends javax.swing.JFrame {
         hotelRemoveButton.setEnabled(false);
         hotelTable.setEnabled(false);
         hotelGstCheckBox.setEnabled(false);
-        
-        
-        
-        
-        
-        
-        
         
         }
         
@@ -1106,6 +1182,66 @@ public class RestaurentHotel extends javax.swing.JFrame {
         
     }//GEN-LAST:event_changeButtonActionPerformedActionPerformed
 
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        // TODO add your handling code here====================
+         DefaultTableModel model1 = (DefaultTableModel)hotelTable.getModel();
+         DefaultTableModel model2 = (DefaultTableModel)restaurantTable.getModel();
+         
+        checkInDate.setDate(null);
+        checkOutDate.setDate(null);
+        roomNumber.setSelectedIndex(0);
+        roomType.setSelectedIndex(0);
+        numberOfNight.setText(null);
+        pricePerNight.setText(null);
+        
+        billNumber.setText(null);
+        firstName.setText(null);
+        lastName.setText(null);
+        address.setText(null);
+        mobileNumber.setText(null);
+        zipCode.setText(null);
+        hotelCheckBox.setSelected(false);
+        restaurantCheckBox.setSelected(false);
+        tableNumber.setSelectedIndex(0);
+        items.setSelectedIndex(0);
+        quantity.setText(null);
+        waiterName.setText(null);
+        
+        roomBillTotal.setText(null);
+        restaurantBillTotal.setText(null);
+        discount.setText(null);
+        payableAmount.setText(null);
+        rec.setText(null);
+        balance.setText(null);
+        billNo = 0;
+        
+      int rowCount = model1.getRowCount();
+//Remove rows one by one from the end of the table
+for (int i = rowCount - 1; i >= 0; i--) {
+    model1.removeRow(i);
+}
+ 
+        
+  int rowCount1 = model2.getRowCount();
+//Remove rows one by one from the end of the table
+for (int i = rowCount1 - 1; i >= 0; i--) {
+    model2.removeRow(i);
+}
+        
+        
+        
+        //===============================================================
+        
+        
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        // TODO add your handling code here:
+        AddMenu obj = new AddMenu();
+        obj.main(new String[]{});
+        
+    }//GEN-LAST:event_addActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1143,6 +1279,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton add;
     private javax.swing.JButton addToCart;
     private javax.swing.JTextField address;
     private javax.swing.JTextField balance;
@@ -1160,7 +1297,6 @@ public class RestaurentHotel extends javax.swing.JFrame {
     private javax.swing.JTable hotelTable;
     private javax.swing.JComboBox<String> items;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1268,7 +1404,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
     
     
     public void CreateInvoice() throws DocumentException, IOException{
-        final  String RESULT = "F:/Invoice"+billNo+".pdf";
+        final  String RESULT = "E:\\hhpos\\Invoice"+billNo+".pdf";
     
     // step 1
         Document document = new Document();
@@ -1331,7 +1467,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         //Add time
         //Add Cahier Name
         //Get Invoice No.  /Date /Time From DataBase
-        PdfPCell top1 = getCell("GSTIN:"+billNumber.getText(),PdfPCell.ALIGN_LEFT);//Add invoice no. here;
+        PdfPCell top1 = getCell("GSTIN:03AAUPK3355J2ZF",PdfPCell.ALIGN_LEFT);//Add invoice no. here;
         top1.setBorderWidthTop(1f);
         table.addCell(top1);
         
@@ -1524,8 +1660,9 @@ public class RestaurentHotel extends javax.swing.JFrame {
 
        
         paragraph[2].add(phrase[2]);
-        document.add(paragraph[2]);
         paragraph[2].setAlignment(Element.ALIGN_RIGHT);
+        document.add(paragraph[2]);
+        
         phrase[3].add(new Chunk("Thank you,Please Visit Again",new Font(Font.FontFamily.HELVETICA,12,Font.BOLD)));//ADD YOUR GST NO. HERE
         
       
@@ -1697,7 +1834,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
      
         this.connectDatabase();
       try{
-        PreparedStatement psmt = con.prepareStatement("INSERT INTO MAIN_BILL(RESTAURANT_BILL,RESTAURANT_GST,ROOM_BILL_TOTAL,ROOM_GST,PAYABLE_AMOUNT,DISCOUNT,RECEIVED_AMOUNT,BILL_DATE,BILL_TIME) VALUES(?,?,?,?,?,?,?,?,?)");
+        PreparedStatement psmt = con.prepareStatement("INSERT INTO MAIN_BILL(RESTAURANT_BILL,RESTAURANT_GST,ROOM_BILL_TOTAL,ROOM_GST,PAYABLE_AMOUNT,DISCOUNT,RECEIVED_AMOUNT,BILL_DATE,BILL_TIME,Cashier) VALUES(?,?,?,?,?,?,?,?,?,?)");
         PreparedStatement getInvoice = con.prepareStatement("SELECT Invoice_no FROM main_bill ORDER BY Invoice_no DESC LIMIT 1;");
         
         
@@ -1710,6 +1847,7 @@ public class RestaurentHotel extends javax.swing.JFrame {
         psmt.setDouble(7,Double.parseDouble(rec.getText()));
         psmt.setDate(8,getDate());
         psmt.setTime(9,getTime());
+        psmt.setString(10,CashierName);
         int i  = psmt.executeUpdate();
         System.out.println("Information inserted "+i); 
         //Insert customer Information
